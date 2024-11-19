@@ -10,7 +10,7 @@ GREEN = (0, 255, 0)
 
 video = cv2.VideoCapture("Untitled.mp4")
 
-model = YOLO(".models/yolov8s-300epoch.pt")
+model = YOLO("./models/yolov8s-300epoch.pt")
 
 counter = {"car": 0, "truck": 0, "motorbike": 0, "bus": 0}
 
