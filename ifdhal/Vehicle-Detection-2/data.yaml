@@ -1,0 +1,15 @@
+names:
+- bus
+- car
+- motorbike
+- truck
+nc: 4
+roboflow:
+  license: CC BY 4.0
+  project: vehicle-detection-bvxpr
+  url: https://universe.roboflow.com/skripsi-1qzlz/vehicle-detection-bvxpr/dataset/2
+  version: 2
+  workspace: skripsi-1qzlz
+test: ../test/images
+train: ../train/images
+val: ../valid/images
