@@ -22,7 +22,7 @@ tracker = Tracker()
 
 line_point1 = (125, 480)
 line_point2 = (738, 705)
-offset = 6
+offset = 12
 
 # {0: 'bus', 1: 'car', 2: 'motorbike', 3: 'truck'}
 classes_dict = model.model.names  # type: ignore
@@ -55,7 +55,7 @@ while video.isOpened():
                 update_counter(cls, counter)
 
         draw_counter(frame, counter)
-        
+
         cv2.imshow("Image", frame)
 
     if cv2.waitKey(1) & 0xFF == ord("q"):
