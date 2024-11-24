@@ -4,7 +4,8 @@ from ultralytics import YOLO
 from util import (
         draw_counter,
         draw_label,
-        # update_counter
+        update_counter,
+        trigger_line
     )
 CONFIDENCE_THRESHOLD = 0.8
 GREEN = (0, 255, 0)
@@ -41,8 +42,6 @@ while video.isOpened():
         confidence_score = results[0].boxes.conf
         tracked_bounding_box = tracker.update(bounding_box)
 
-        draw_counter(frame, counter)
-
         for bbox, cls, conf in zip(tracked_bounding_box, classes_idx, confidence_score):
 
             x1, y1, x2, y2, object_id = [int(value) for value in bbox]
@@ -51,8 +50,12 @@ while video.isOpened():
 
             draw_label(frame, classes_dict, cls, x1, y1, object_id)
 
-#            update_counter(cls, counter) # TO DO: ADD TRACKER TO PREVENT DUPLICATE DETECTION
+            # take only the y value from line
+            if trigger_line(line_point1[1], line_point2[1], offset, [y1, y2]):
+                update_counter(cls, counter)
 
+        draw_counter(frame, counter)
+        
         cv2.imshow("Image", frame)
 
     if cv2.waitKey(1) & 0xFF == ord("q"):
