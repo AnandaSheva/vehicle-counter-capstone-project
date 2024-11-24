@@ -21,7 +21,7 @@ def center_crop(img, dim):
     return crop_img
 
 
-def draw_label(frame, label_dict: dict, class_idx: int, x1: int, y1: int, id:int):
+def draw_label(frame, label_dict: dict, class_idx: int, x1: int, y1: int, id: int):
     cv2.putText(
         frame,
         f"#{id} {label_dict[class_idx]}",
@@ -33,11 +33,15 @@ def draw_label(frame, label_dict: dict, class_idx: int, x1: int, y1: int, id:int
     )
 
 
-def trigger_line(line_point1: int, line_point2: int, offset: int,  y_points: list) -> None:
+def trigger_line(line_point1: int, line_point2: int, offset: int,  y_points: list) -> bool:
     bbox_y_center = sum(y_points) // len(y_points)
 
-    pass
+    line_point_center = (line_point1 + line_point2) // 2
 
+    if line_point_center < (bbox_y_center + offset) and line_point_center > (bbox_y_center - offset):
+        return True
+    else:
+        return False
 
 
 def update_counter(class_idx: int, counter_dict: dict) -> None:
