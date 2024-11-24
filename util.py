@@ -21,16 +21,23 @@ def center_crop(img, dim):
     return crop_img
 
 
-def draw_label(frame, label_dict: dict, class_idx: int, x1: int, y1: int):
+def draw_label(frame, label_dict: dict, class_idx: int, x1: int, y1: int, id:int):
     cv2.putText(
         frame,
-        label_dict[class_idx],
+        f"#{id} {label_dict[class_idx]}",
         (x1, y1 - 10),
         fontFace=cv2.FONT_HERSHEY_SIMPLEX,
         fontScale=0.6,
         color=(255, 255, 255),
         thickness=2
     )
+
+
+def trigger_line(line_point1: int, line_point2: int, offset: int,  y_points: list) -> None:
+    bbox_y_center = sum(y_points) // len(y_points)
+
+    pass
+
 
 
 def update_counter(class_idx: int, counter_dict: dict) -> None:
