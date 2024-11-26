@@ -34,6 +34,19 @@ def draw_label(frame, label_dict: dict, class_idx: int, x1: int, y1: int, id: in
 
 
 def trigger_line(line_point1: int, line_point2: int, offset: int,  y_points: list) -> bool:
+    """
+        Determines if the center of a line defined by two points falls within a specified offset
+        from the center of a bounding box defined by a list of y-coordinates.
+
+        Args:
+            line_point1 (int): The y-coordinate of the first point of the line.
+            line_point2 (int): The y-coordinate of the second point of the line.
+            offset (int): The allowable offset from the center of the bounding box.
+            y_points (list): A list of y-coordinates defining the bounding box.
+
+        Returns:
+            bool: True if the center of the line is within the offset from the center of the bounding box, False otherwise.
+    """
     bbox_y_center = sum(y_points) // len(y_points)
 
     line_point_center = (line_point1 + line_point2) // 2
@@ -45,6 +58,18 @@ def trigger_line(line_point1: int, line_point2: int, offset: int,  y_points: lis
 
 
 def update_counter(class_idx: int, counter_dict: dict) -> None:
+    """
+    Updates the count of a specific class in the counter dictionary.
+
+    Args:
+        class_idx (int): The index of the class to be updated.
+                         Expected values are 0 for 'bus', 1 for 'car', 2 for 'motorbike', and 3 for 'truck'.
+        counter_dict (dict): A dictionary where keys are class labels ('bus', 'car', 'motorbike', 'truck')
+                             and values are the counts to be updated.
+
+    Returns:
+        None
+    """
     index_to_class = {0: 'bus', 1: 'car', 2: 'motorbike', 3: 'truck'}
     class_label = index_to_class.get(class_idx)
     if class_label in counter_dict:
