@@ -78,8 +78,8 @@ def update_counter(class_idx: int, counter_dict: dict) -> None:
 
 
 def draw_counter(frame, counter_dict: dict):
-    bg_x1, bg_y1 = 0, 40  # Posisi atas kiri
-    bg_x2, bg_y2 = 200, 160  # Posisi bawah kanan
+    bg_x1, bg_y1 = 0, 40  
+    bg_x2, bg_y2 = 200, 160  
     cv2.rectangle(frame, (bg_x1, bg_y1), (bg_x2, bg_y2), (0, 0, 0), thickness=-1)
 
     cv2.putText(
