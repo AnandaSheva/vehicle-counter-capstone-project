@@ -2,6 +2,7 @@ import cv2
 
 WHITE = (255, 255, 255)
 RED = (0, 0, 255)
+GREEN = (0, 255, 0)
 
 
 def center_crop(img, dim):
@@ -77,12 +78,16 @@ def update_counter(class_idx: int, counter_dict: dict) -> None:
 
 
 def draw_counter(frame, counter_dict: dict):
+    bg_x1, bg_y1 = 0, 40  # Posisi atas kiri
+    bg_x2, bg_y2 = 200, 160  # Posisi bawah kanan
+    cv2.rectangle(frame, (bg_x1, bg_y1), (bg_x2, bg_y2), (0, 0, 0), thickness=-1)
+
     cv2.putText(
         frame,
         text=f"Car: {counter_dict['car']}",
         org=(0, 60),
         fontFace=cv2.FONT_HERSHEY_COMPLEX_SMALL,
-        thickness=1, fontScale=1.0, color=WHITE
+        thickness=1, fontScale=1.0, color=GREEN
     )
 
     cv2.putText(
@@ -90,7 +95,7 @@ def draw_counter(frame, counter_dict: dict):
         text=f"Motorbike: {counter_dict['motorbike']}",
         org=(0, 90),
         fontFace=cv2.FONT_HERSHEY_COMPLEX_SMALL,
-        thickness=1, fontScale=1.0, color=WHITE
+        thickness=1, fontScale=1.0, color=GREEN
     )
 
     cv2.putText(
@@ -98,7 +103,7 @@ def draw_counter(frame, counter_dict: dict):
         text=f"Truck: {counter_dict['truck']}",
         org=(0, 120),
         fontFace=cv2.FONT_HERSHEY_COMPLEX_SMALL,
-        thickness=1, fontScale=1.0, color=WHITE
+        thickness=1, fontScale=1.0, color=GREEN
     )
 
     cv2.putText(
@@ -106,7 +111,7 @@ def draw_counter(frame, counter_dict: dict):
         text=f"Bus: {counter_dict['bus']}",
         org=(0, 150),
         fontFace=cv2.FONT_HERSHEY_COMPLEX_SMALL,
-        thickness=1, fontScale=1.0, color=WHITE
+        thickness=1, fontScale=1.0, color=GREEN
     )
 
 
