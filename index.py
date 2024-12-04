@@ -7,22 +7,23 @@ from util import (
         update_counter,
         trigger_line
     )
-CONFIDENCE_THRESHOLD = 0.8
+CONFIDENCE_THRESHOLD = 0.65
 GREEN = (0, 255, 0)
 RED = (0, 0, 255)
 
 video = cv2.VideoCapture("Untitled.mp4")
 
-model = YOLO("./models/yolov8s-300epoch.pt")
+model = YOLO("models/yolov11-200epochs.pt")
 model.fuse()
 
 counter = {"car": 0, "truck": 0, "motorbike": 0, "bus": 0}
+counter_list = []
 
 tracker = Tracker()
 
-line_point1 = (125, 480)
+line_point1 = (125, 425)
 line_point2 = (738, 705)
-offset = 12
+offset = 8
 
 # {0: 'bus', 1: 'car', 2: 'motorbike', 3: 'truck'}
 classes_dict = model.model.names  # type: ignore
@@ -33,6 +34,8 @@ while video.isOpened():
         break
 
     cv2.line(frame, line_point1, line_point2, color=RED, thickness=3)
+
+    draw_counter(frame, counter)
 
     results = model.predict(frame, conf=CONFIDENCE_THRESHOLD, verbose=False)
     if ret and results[0].boxes is not None:
@@ -45,16 +48,17 @@ while video.isOpened():
         for bbox, cls, conf in zip(tracked_bounding_box, classes_idx, confidence_score):
 
             x1, y1, x2, y2, object_id = [int(value) for value in bbox]
-
-            cv2.rectangle(frame, (x1, y1), (x2, y2), color=GREEN, thickness=1)
-
-            draw_label(frame, classes_dict, cls, x1, y1, object_id)
+            cv2.rectangle(frame, (x1, y1), (x2, y2), color=RED, thickness=1)
 
             # take only the y value from line
             if trigger_line(line_point1[1], line_point2[1], offset, [y1, y2]):
-                update_counter(cls, counter)
+                cv2.rectangle(frame, (x1, y1), (x2, y2), color=GREEN, thickness=1)
 
-        draw_counter(frame, counter)
+                draw_label(frame, classes_dict, cls, x1, y1, object_id)
+                if counter_list.count(object_id) == 0:
+                    counter_list.append(object_id)
+                    update_counter(cls, counter)
+                draw_counter(frame, counter)
 
         cv2.imshow("Image", frame)
 
