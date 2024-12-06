@@ -4,14 +4,19 @@ from flask_socketio import SocketIO
 from trackerr import Tracker
 from ultralytics import YOLO
 from util import draw_counter, draw_label, update_counter, trigger_line
+from flask_cors import CORS
 
 CONFIDENCE_THRESHOLD = 0.8
 GREEN = (0, 255, 0)
 RED = (0, 0, 255)
 
-# Flask app and SocketIO setup
+
+# Flask app and CORS setup
 app = Flask(__name__)
-socketio = SocketIO(app)
+CORS(app)
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+#socketio = SocketIO(app)
 
 # Initialize video capture and YOLO model
 video = cv2.VideoCapture("Untitled.mp4")
